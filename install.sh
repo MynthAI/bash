@@ -72,6 +72,15 @@ install_latest_release() {
       exit 1
     fi
 
+    if [[ "$binary" == *"$variant"* ]]; then
+      original=$binary
+      binary="${binary//$variant/}"
+      binary="${binary%-}"
+      mv "$original" "$binary"
+      chmod +x "$binary"
+      echo "Renamed $(basename "$original") to $(basename "$binary")"
+    fi
+
     echo "Installing $binary to $install_dir..."
     mkdir -p "$install_dir"
     sudo cp "$binary" "$install_dir"
