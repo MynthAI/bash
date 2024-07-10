@@ -62,6 +62,12 @@ install_latest_release() {
     binary=$(find latest_release_dir -type f -executable | head -n 1)
 
     if [ -z "$binary" ]; then
+      first=$(find latest_release_dir -type f | head -n 1)
+      chmod +x "$first"
+      binary=$(find latest_release_dir -type f -executable | head -n 1)
+    fi
+
+    if [ -z "$binary" ]; then
       echo "No binary file found in the release archive."
       exit 1
     fi
